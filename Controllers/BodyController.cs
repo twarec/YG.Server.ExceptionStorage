@@ -18,9 +18,49 @@ public class BodyController(IBodyService bodyService) : ControllerBase
     public async Task<IActionResult> Create([FromBody, Required] BodyCreateData data, [FromRoute, Required, MinLength(1)] string rootId)
     {
         var result = await bodyService.CreateAsync(data.ToDataBase(), rootId);
-        if(result == null) return NotFound();
+        if (result == null) return NotFound();
         return Ok(result);
     }
 
+    [HttpGet("Root/{rootId}/Range")]
+    [ProducesResponseType(typeof(IEnumerable<Body>), StatusCodes.Status200OK)]
+    public async Task<IActionResult> GetRange([FromRoute, Required] string rootId, [FromQuery, Required] int offset, [FromQuery, Required] int count)
+    {
+        return Ok(await bodyService.GetRangeAsync(offset, count, rootId));
+    }
 
+    [HttpGet("Root/{rootId}/Type/{type}/Range")]
+    [ProducesResponseType(typeof(IEnumerable<Body>), StatusCodes.Status200OK)]
+    public async Task<IActionResult> GetRange([FromRoute, Required] string rootId, [FromRoute, Required] string type, [FromQuery, Required] int offset, [FromQuery, Required] int count)
+    {
+        return Ok(await bodyService.GetRangeAsync(offset, count, rootId, type));
+    }
+
+    [HttpGet("Root/{rootId}/Type/{type}/Name/{name}/Range")]
+    [ProducesResponseType(typeof(IEnumerable<Body>), StatusCodes.Status200OK)]
+    public async Task<IActionResult> GetRange([FromRoute, Required] string rootId, [FromRoute, Required] string type, [FromRoute, Required] string name, [FromQuery, Required] int offset, [FromQuery, Required] int count)
+    {
+        return Ok(await bodyService.GetRangeAsync(offset, count, rootId, type, name));
+    }
+
+    [HttpGet("Root/{rootId}/Range/All")]
+    [ProducesResponseType(typeof(IEnumerable<Body>), StatusCodes.Status200OK)]
+    public async Task<IActionResult> GetAll([FromRoute, Required] string rootId)
+    {
+        return Ok(await bodyService.GetAllAsync(rootId));
+    }
+
+    [HttpGet("Root/{rootId}/Type/{type}/Range/All")]
+    [ProducesResponseType(typeof(IEnumerable<Body>), StatusCodes.Status200OK)]
+    public async Task<IActionResult> GetAll([FromRoute, Required] string rootId, [FromRoute, Required] string type)
+    {
+        return Ok(await bodyService.GetAllAsync(rootId, type));
+    }
+
+    [HttpGet("Root/{rootId}/Type/{type}/Name/{name}/Range/All")]
+    [ProducesResponseType(typeof(IEnumerable<Body>), StatusCodes.Status200OK)]
+    public async Task<IActionResult> GetAll([FromRoute, Required] string rootId, [FromRoute, Required] string type, [FromRoute, Required] string name)
+    {
+        return Ok(await bodyService.GetAllAsync(rootId, type, name));
+    }
 }

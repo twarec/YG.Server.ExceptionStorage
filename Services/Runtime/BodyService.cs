@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Http.HttpResults;
+using Microsoft.EntityFrameworkCore;
 using YG.Server.ExceptionStorage.DataBase;
 using YG.Server.ExceptionStorage.DataBase.Models;
 
@@ -20,5 +21,60 @@ public class BodyService(GeneralContext db) : IBodyService
         root.Messages.Add(body);
         await db.SaveChangesAsync();
         return body;
+    }
+
+    public async Task<IEnumerable<Body>> GetAllAsync(string rootId)
+    {
+        return await db.Bodys
+            .Where(_ => _.RootId == rootId)
+            .ToListAsync();
+
+    }
+
+    public async Task<IEnumerable<Body>> GetAllAsync(string rootId, string type)
+    {
+        return await db.Bodys
+            .Where(_ => _.RootId == rootId)
+            .Where(_ => _.Type == type)
+            .ToListAsync();
+    }
+
+    public async Task<IEnumerable<Body>> GetAllAsync(string rootId, string type, string name)
+    {
+        return await db.Bodys
+            .Where(_ => _.RootId == rootId)
+            .Where(_ => _.Type == type)
+            .Where(_ => _.Name == name)
+            .ToListAsync();
+    }
+
+    public async Task<IEnumerable<Body>> GetRangeAsync(int offset, int count, string rootId)
+    {
+        return await db.Bodys
+            .Where(_ => _.RootId == rootId)
+            .Skip(offset)
+            .Take(count)
+            .ToListAsync();
+    }
+
+    public async Task<IEnumerable<Body>> GetRangeAsync(int offset, int count, string rootId, string type)
+    {
+        return await db.Bodys
+            .Where(_ => _.RootId == rootId)
+            .Where(_ => _.Type == type)
+            .Skip(offset)
+            .Take(count)
+            .ToListAsync();
+    }
+
+    public async Task<IEnumerable<Body>> GetRangeAsync(int offset, int count, string rootId, string type, string name)
+    {
+        return await db.Bodys
+            .Where(_ => _.RootId == rootId)
+            .Where(_ => _.Type == type)
+            .Where(_ => _.Name == name)
+            .Skip(offset)
+            .Take(count)
+            .ToListAsync();
     }
 }
