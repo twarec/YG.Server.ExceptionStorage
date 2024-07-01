@@ -37,7 +37,7 @@ public static class ServiceExtensions
 
     public static SwaggerUIOptions AddExceptionsStorage(this SwaggerUIOptions options)
     {
-        options.SwaggerEndpoint(url: $"waaaww/swagger/ExceptionStorage/swagger.json", name: "ExceptionStorage");
+        options.SwaggerEndpoint(url: $"./swagger/ExceptionStorage/swagger.json", name: "ExceptionStorage");
         return options;
     }
     public static IEndpointRouteBuilder UseExceptionsStorage(this IEndpointRouteBuilder builder)
