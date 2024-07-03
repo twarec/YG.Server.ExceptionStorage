@@ -27,6 +27,7 @@ public class BodyService(GeneralContext db) : IBodyService
     {
         return await db.Bodys
             .Where(_ => _.RootId == rootId)
+            .Include(_ => _.Fields)
             .ToListAsync();
 
     }
@@ -36,6 +37,7 @@ public class BodyService(GeneralContext db) : IBodyService
         return await db.Bodys
             .Where(_ => _.RootId == rootId)
             .Where(_ => _.Type == type)
+            .Include(_ => _.Fields)
             .ToListAsync();
     }
 
@@ -45,6 +47,7 @@ public class BodyService(GeneralContext db) : IBodyService
             .Where(_ => _.RootId == rootId)
             .Where(_ => _.Type == type)
             .Where(_ => _.Name == name)
+            .Include(_ => _.Fields)
             .ToListAsync();
     }
 
@@ -54,6 +57,7 @@ public class BodyService(GeneralContext db) : IBodyService
             .Where(_ => _.RootId == rootId)
             .Skip(offset)
             .Take(count)
+            .Include(_ => _.Fields)
             .ToListAsync();
     }
 
@@ -64,6 +68,7 @@ public class BodyService(GeneralContext db) : IBodyService
             .Where(_ => _.Type == type)
             .Skip(offset)
             .Take(count)
+            .Include(_ => _.Fields)
             .ToListAsync();
     }
 
@@ -75,6 +80,7 @@ public class BodyService(GeneralContext db) : IBodyService
             .Where(_ => _.Name == name)
             .Skip(offset)
             .Take(count)
+            .Include(_ => _.Fields)
             .ToListAsync();
     }
 }
