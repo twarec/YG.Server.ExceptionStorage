@@ -100,6 +100,7 @@ public class BodyService(GeneralContext db) : IBodyService
             .Where(_ => before == null ? true : _.DateCreate <= before)
             .Skip(offset)
             .Take(count)
+            .Include(_ => _.Fields)
             .ToListAsync();
     }
 }
