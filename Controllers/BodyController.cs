@@ -63,4 +63,11 @@ public class BodyController(IBodyService bodyService) : ControllerBase
     {
         return Ok(await bodyService.GetAllAsync(rootId, type, name));
     }
+
+    [HttpGet("Range/Filter")]
+    [ProducesResponseType(typeof(IEnumerable<Body>), StatusCodes.Status200OK)]
+    public async Task<IActionResult> GetRangeFilterAsync([FromQuery] string? rootId, [FromQuery] string? type, [FromQuery] string? name, [FromQuery] DateTime? after, [FromQuery] DateTime? before, [FromQuery, Required] int offset, [FromQuery, Required] int count)
+    {
+        return Ok(await bodyService.GetRangeFilterAsync(offset, count, rootId, type, name, after, before));
+    }
 }

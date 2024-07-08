@@ -5,6 +5,7 @@ namespace YG.Server.ExceptionStorage.DataBase.Models;
 
 [Index(nameof(Type))]
 [Index(nameof(Name))]
+[Index(nameof(DateCreate), IsDescending = [true])]
 public class Body
 {
     [Key]

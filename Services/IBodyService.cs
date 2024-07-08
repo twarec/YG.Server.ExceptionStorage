@@ -14,4 +14,5 @@ public interface IBodyService
 
     public Task<IEnumerable<Body>> GetRangeAsync(int offset, int count, string rootId, string type, string name);
     public Task<IEnumerable<Body>> GetAllAsync(string rootId, string type, string name);
+    public Task<IEnumerable<Body>> GetRangeFilterAsync(int offset, int count, string? rootId, string? type, string? name, DateTime? after, DateTime? before);
 }
